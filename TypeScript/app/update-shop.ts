@@ -23,29 +23,40 @@ interface ApiResponse {
 
 // Make a specified number of HTTP requests to the API
 export async function makeRequests(numRequests: number): Promise<void> {
-    const req = Array.from({ length: numRequests }, () => axios.get<ApiResponse>(url));
-    const res = await Promise.all(req);
+    try {
+        const req = Array.from({ length: numRequests }, () => axios.get<ApiResponse>(url));
+        const res = await Promise.all(req);
 
-    // Count the number of responses received that are 'yes' for each request
-    const positiveResponses = res.filter(response => response.data.answer === 'yes').length;
+        // Count the number of responses received that are 'yes' for each request
+        const positiveResponses = res.filter(response => response.data.answer === 'yes').length;
 
-    // Log number of positive responses to to log.txt
-    fs.appendFileSync('log.txt', `Number of positive responses: ${positiveResponses}\n`);
-    // Also log to console
-    console.log(`Number of positive responses: ${positiveResponses}`);
+        // Log number of positive responses to to log.txt
+        fs.appendFileSync('log.txt', `Number of positive responses: ${positiveResponses}\n`);
+        // Also log to console
+        console.log(`Number of positive responses: ${positiveResponses}`);
 
-    // If there are any positive repsonses, recursively make that many requests again
-    if (positiveResponses > 0) {
-        await makeRequests(positiveResponses);
+        // If there are any positive repsonses, recursively make that many requests again
+        if (positiveResponses > 0) {
+            await makeRequests(positiveResponses);
+        }
+    } catch (error) { // Catch any errors, log to console & txt file
+        console.error(`Error making requests: ${error}`);
+        fs.appendFileSync('log.txt', `Error making requests: ${error}\n`);
     }
 }
 
 // Update the items in the shop
 export function updateShopItems(gildedRose: GildedRose, times: number): void {
-    for (let i = 0; i < times; i++) {
+    try {
+        for (let i = 0; i < times; i++) {
         gildedRose.updateQuality();
+        }
+    } catch (error) {
+        console.error(`Error updating shop: ${error}`);
+        fs.appendFileSync('log.txt', `Error updating shop: ${error}\n`);
     }
 }
+
 // Start the script
 makeRequests(startRequests)
    .then(() => {
@@ -53,7 +64,7 @@ makeRequests(startRequests)
     updateShopItems(gildedRose, updateCount);
    })
    .catch(error => {
-    // Error logging
+    // Logging for errors that occur during the script
        console.error(`Error: ${error}`);
+       fs.appendFileSync('log.txt', `Error running script: ${error}\n`);
    });
-
