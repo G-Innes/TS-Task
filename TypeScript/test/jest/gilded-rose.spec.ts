@@ -14,7 +14,7 @@ describe('Gilded Rose', () => {
   });
 
   it('should decrease quality & sellIn for normal items', () => {
-    const gildedRose = new GildedRose([new Item('normalItem', 10, 10)]);
+    const gildedRose = new GildedRose([new Item('Normal Item', 10, 10)]);
     const items = gildedRose.updateQuality();
     expect(items[0].sellIn).toBe(9);
     expect(items[0].quality).toBe(9);
@@ -35,15 +35,15 @@ describe('Gilded Rose', () => {
   });
 
   it('should increase quality for Backstage passes while sellIn is positive', () => {
-    const gildedRose = new GildedRose([new Item('Backstage pass', 12, 10)]);
+    const gildedRose = new GildedRose([new Item('Backstage passes to a TAFKAL80ETC concert', 11, 10)]);
     const items = gildedRose.updateQuality();
     // SellIn decrease by 1, quality increase by 1
-    expect(items[0].sellIn).toBe(11);
-    expect(items[0].quality).toBe(11);  // Test fails here, expecting 11, but getting 9, so quality is not increasing.
+    expect(items[0].sellIn).toBe(10);
+    expect(items[0].quality).toBe(11);
 
     gildedRose.updateQuality();
     // SellIn < 10 days, quality increase by 2
-    expect(gildedRose.items[0].sellIn).toBe(10);
+    expect(gildedRose.items[0].sellIn).toBe(9);
     expect(gildedRose.items[0].quality).toBe(13);
 
     // Decrease sellIn to 5
@@ -51,8 +51,8 @@ describe('Gilded Rose', () => {
       gildedRose.updateQuality();
     }
     // SellIn 5 days, quality increase by 3
-    expect(gildedRose.items[0].sellIn).toBe(5);
-    expect(gildedRose.items[0].quality).toBe(23);
+    expect(gildedRose.items[0].sellIn).toBe(4);
+    expect(gildedRose.items[0].quality).toBe(24);
   });
 
 });
