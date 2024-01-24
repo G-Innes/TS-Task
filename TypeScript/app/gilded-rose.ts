@@ -87,10 +87,10 @@ export class GildedRose {
   // Method for updating quality of Conjured items.
   updateConjuredItem(item: Item) {
     if (item.quality > 0) {
-      item.quality -= 2; // Decrease quality by 2 as standard
+      item.quality -= 2; // Decrease quality by 2 if quality > 0.
     }
-    if (item.sellIn < 0 && item.quality > 0) {
-      item.quality =- 4; // Decrease quality by 4 if sellIn < 0.
+    if (item.sellIn <= 0 && item.quality > 0) {
+      item.quality -= 2; // Decrease quality by 2 again if sellIn <= 0.
     }
   }
 }
