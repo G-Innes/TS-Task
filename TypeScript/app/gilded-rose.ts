@@ -55,42 +55,58 @@ export class GildedRose {
 
   // Method for updating quality of normal items.
   updateNormalItem(item: Item) {
-    if (item.quality > 0) {
-      item.quality--;
-    }
-    // Decreases quality by 1 again if the sellIn date is less than 0.
-    if (item.sellIn <= 0 && item.quality > 0) {
-      item.quality--;
+    try {
+      if (item.quality > 0) {
+        item.quality--;
+      }
+      // Decreases quality by 1 again if the sellIn date is less than 0.
+      if (item.sellIn <= 0 && item.quality > 0) {
+          item.quality--;
+      }
+    } catch (error) {
+      console.log(`Error updating normal item: ${error}`);
     }
   }
 
   // Method for updating quality of Brie- quality increases by 1 if the sellIn date > 0.
   updateAgedBrie(item: Item) {
-    if (item.quality < 50) {
-      item.quality += 1;
+    try {
+      if (item.quality < 50) {
+          item.quality += 1;
+        }
+    } catch (error) {
+      console.log(`Error updating Aged Brie: ${error}`);
     }
   }
 
   // Method for updating quality of Backstage passes.
   updateBackstagePass(item: Item) {
-    if (item.sellIn <= 0) {
-      item.quality = 0; // Set quality to 0 if sellIn = 0.
-    } else if (item.sellIn <= 5) {
-      item.quality += 3; // Increase quality by 3 if sellIn <= 5.
-    } else if (item.sellIn <= 10) {
-      item.quality += 2; // Increase quality by 2 if sellIn <= 10.
-    } else {
-      item.quality += 1; // Otherwise, increase quality by 1.
+    try {
+      if (item.sellIn <= 0) {
+        item.quality = 0; // Set quality to 0 if sellIn = 0.
+      } else if (item.sellIn <= 5) {
+        item.quality += 3; // Increase quality by 3 if sellIn <= 5.
+      } else if (item.sellIn <= 10) {
+        item.quality += 2; // Increase quality by 2 if sellIn <= 10.
+      } else {
+        item.quality += 1; // Otherwise, increase quality by 1.
+      }
+    } catch (error) {
+      console.log(`Error updating Backstage passes: ${error}`);
     }
   }
 
   // Method for updating quality of Conjured items.
   updateConjuredItem(item: Item) {
-    if (item.quality > 0) {
-      item.quality -= 2; // Decrease quality by 2 if quality > 0.
-    }
-    if (item.sellIn <= 0 && item.quality > 0) {
-      item.quality -= 2; // Decrease quality by 2 again if sellIn <= 0.
+    try {
+      if (item.quality > 0) {
+        item.quality -= 2; // Decrease quality by 2 if quality > 0.
+      }
+      if (item.sellIn <= 0 && item.quality > 0) {
+        item.quality -= 2; // Decrease quality by 2 again if sellIn <= 0.
+      }
+    } catch (error) {
+      console.log(`Error updating Conjured item: ${error}`);
     }
   }
 }
