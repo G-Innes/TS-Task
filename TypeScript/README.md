@@ -13,7 +13,7 @@ This is the Gilded Rose kata in TypeScript.
 1. Clone this repo
 2. cd to the Typescript folder
 3. Run `npm install`
-4. Run `npm run test:jest test/jest/gilded-rose.spec.ts test/jest/update-shop.spec.ts` to run the tests for both update-shop.ts and gilded-rose.ts
+4. Run `npm run test:jest` to run the tests for edited update-shop.ts and gilded-rose.ts files.
 5. Run `ts-node app/update-shop.ts 10 5` to run the script to update the inventory of the shop.
 6. the number of positive responses will be logged to a log.txt file in the root of the TYPESCRIPT folder. The positive responses are also logged to the console.
 
